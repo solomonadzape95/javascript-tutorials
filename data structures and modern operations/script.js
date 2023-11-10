@@ -129,4 +129,12 @@ console.log(ordersSet.has('Bread'));
 ordersSet.add('Garlic Bread');
 ordersSet.add('Garlic Bread');
 ordersSet.delete('Risotto');
+// ordersSet.clear()
 console.log(ordersSet);
+// Looping over sets
+
+for (const order of ordersSet) console.log(order);
+// Use Case Example
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
