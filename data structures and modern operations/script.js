@@ -164,24 +164,126 @@ const game = {
 // console.log(rest.size);
 // rest.clear()
 //  Filling Mapps without using .set()
-const question = new Map([
-  ['question', 'What is the best programming language in the world?'],
-  [1, 'C'],
-  [2, 'Java'],
-  [3, 'JavaScript'],
-  ['correct', 3],
-  [true, 'Correct'],
-  [false, 'Try Again!'],
-]);
-// converting object to map
-console.log(Object.entries(openingHours));
-console.log(new Map(Object.entries(openingHours)));
+// const question = new Map([
+//   ['question', 'What is the best programming language in the world?'],
+//   [1, 'C'],
+//   [2, 'Java'],
+//   [3, 'JavaScript'],
+//   ['correct', 3],
+//   [true, 'Correct'],
+//   [false, 'Try Again!'],
+// ]);
+// // converting object to map
+// console.log(Object.entries(openingHours));
+// console.log(new Map(Object.entries(openingHours)));
 
-// Quiz App
-console.log(question.get('question'));
-for (const [key, value] of question) {
-  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+// // Quiz App
+// console.log(question.get('question'));
+// for (const [key, value] of question) {
+//   if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+// }
+// // const answer = Number(prompt('Your Answer'));
+// // console.log(question.get(answer === question.get('correct')));
+
+// // Map to Array
+// console.log([...question]);
+
+const gameEvents = new Map([
+  [17, '⚽ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🟨 Yellow Card'],
+  [69, '🔴 Red Card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽ GOAL'],
+  [80, '⚽ GOAL'],
+  [92, '🟨 Yellow Card'],
+]);
+// // Task 1: Create an events array with all unique events from the game
+// const events = [...new Set(gameEvents.values())];
+// console.log(events);
+
+// // Task 2: Remove the 64 minute 'Yellow Card' event from the game events log since it is deemed to be unfair
+// gameEvents.delete(64);
+// console.log(gameEvents);
+
+// // Task 3: Log to the console the average time taken before an event occurs
+// let average = 0;
+// console.log(
+//   `An event happened, on average, every ${90/gameEvents.size} minutes`
+// );
+
+// // Task 4: Log to the console whether each event that occured in the game happened in the first or second halves
+// for (const [key, value] of gameEvents) {
+//   let half = key >= 45 ? '[SECOND HALF]' : '[FIRST HALF]';
+//   console.log(`${half} ${key}: ${value}`);
+// }
+
+// Working with Strings
+// const airline = 'TAP Air Portugal';
+// const plane = 'A320';
+// console.log(plane[0]);
+// console.log(plane[20]);
+// console.log(airline[8]);
+// console.log('B737'[0]);
+
+// console.log(airline.slice(0, airline.indexOf(' ')));
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+// const checkMid = function (seat) {
+//   seat.indexOf('B') > 0 || seat.indexOf('E') > 0
+//     ? console.log(`You got the middle seat 😬`)
+//     : console.log(`You got lucky 😎`);
+// };
+// checkMid('11B');
+// checkMid('23C');
+// checkMid('3E');
+
+// Regular Expressions
+// Put the substring to be replaced between slashes like /door/g **g stands for global.
+// The string methods that return boleans are .includes(), .startsWith() and .endsWith()
+
+// Real World Examples
+// 1:
+// const maskCreditCard = function (number) {
+//   const str = number + '';
+//   const last = str.slice(-4);
+//   return last.padStart(str.length, '*');
+// };
+// console.log(maskCreditCard(2235343534552542544));
+// console.log(maskCreditCard('22353435345525425445555555'));
+// console.log(maskCreditCard(455254254383748));
+
+// // 2:
+// const msg = 'Bad Weather... All Departures DElayed...';
+// console.log(msg.repeat(5));
+
+// const planesInLine = function (n) {
+//   console.log(`There are ${n} planes in line${'✈️'.repeat(n)}`);
+// };
+// planesInLine(5);
+// planesInLine(3);
+// planesInLine(13);
+
+// String Challenge
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+const checkLocation = function (text) {
+  return text.slice(0, 3).toUpperCase();
+};
+const flight = flights.split('+');
+console.log(flight);
+for (const msg of flight) {
+  let [state, from, to, time] = msg.split(';');
+  state = state.includes('Delayed')
+    ? state.replace('_', '🔴').replace('_', ' ')
+    : state.replace(/_/g, ' ').trimStart();
+  from = from.slice(0, 3).toUpperCase();
+  to = to.slice(0, 3).toUpperCase();
+  const [hr, min] = time.split(':');
+  const output = `${state} from ${from} to ${to} (${hr}h${min})`.padStart(45)
+  console.log(output);
 }
-const answer = Number(prompt('Your Answer'));
-console.log(question.get(answer === 3));
-;
