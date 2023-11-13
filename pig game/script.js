@@ -100,8 +100,9 @@ hold.addEventListener('click', () => {
   running ? holdFunc() : null;
 });
 newBtn.addEventListener('click', () => {
+  activePlayer.classList.remove('winner');
   running = false;
-  clearInterval(intervalId)
+  clearInterval(intervalId);
   activePlayer = playerOne;
   activePlayer.classList.remove('next-player');
   playerTwo.classList.add('next-player');
