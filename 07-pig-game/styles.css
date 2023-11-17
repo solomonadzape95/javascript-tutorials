@@ -1,5 +1,8 @@
 body {
   box-sizing: border-box;
+  display: flex;
+  align-content: center;
+  justify-content: center;
   background: linear-gradient(90deg, rgb(219, 37, 101), rgb(168, 29, 131));
   overflow-x: hidden;
 }
@@ -98,7 +101,9 @@ span {
   height: 150px;
   border: none;
   border-radius: 10px;
-  background: whitesmoke;
+  /* background-image: url('./img/dice-1.png'); */
+  background-size: cover;
+  background-position: center;
   position: absolute;
   top: 110px;
   left: calc(50% - 80px);
@@ -148,9 +153,10 @@ div.hidden {
   font-size: larger;
   font-weight: 600;
   font-family: cursive;
-  position: absolute;
+  /* position: absolute; */
   top: 20px;
-  left: 560px;
+  margin: 0 auto;
+  left: calc(100vw / 2.3);
 }
 .modal {
   width: 500px;
@@ -260,7 +266,7 @@ summary {
     height: 100px;
     border: none;
     border-radius: 10px;
-    background: whitesmoke;
+    /* background: whitesmoke; */
     position: absolute;
     top: 90px;
     left: calc(50% - 50px);
@@ -275,9 +281,10 @@ summary {
     font-size: larger;
     font-weight: 600;
     font-family: cursive;
-    position: absolute;
+    /* position: absolute; */
+    margin: 0 auto;
     top: 20px;
-    left: 300px;
+    left: calc(100vw / 2.3);
   }
   .modal {
     width: 500px;
@@ -392,7 +399,7 @@ summary {
     height: 80px;
     border: none;
     border-radius: 10px;
-    background: whitesmoke;
+    /* background: whitesmoke; */
     position: absolute;
     top: 100px;
     left: calc(50% - 40px);
@@ -407,9 +414,11 @@ summary {
     font-size: larger;
     font-weight: 600;
     font-family: cursive;
-    position: absolute;
+    margin: 0 auto;
+    /* position: absolute; */
     top: 20px;
-    left: 130px;
+    /* background: black; */
+    left: calc(100vw / 2.6);
   }
   .modal {
     width: 350px;
@@ -519,7 +528,7 @@ summary {
     height: 75px;
     border: none;
     border-radius: 10px;
-    background: whitesmoke;
+    /* background: whitesmoke; */
     position: absolute;
     top: 70px;
     left: calc(50% - 40px);
@@ -534,9 +543,10 @@ summary {
     font-size: larger;
     font-weight: 600;
     font-family: cursive;
-    position: absolute;
+    /* position: absolute; */
+    margin: 0 auto;
     top: 20px;
-    left: 130px;
+    left: calc(100vw / 3.2);
   }
   .modal {
     width: 320px;
@@ -574,9 +584,10 @@ summary {
     font-size: larger;
     font-weight: 600;
     font-family: cursive;
-    position: absolute;
+    /* position: absolute; */
+    margin: 0 auto;
     top: 20px;
-    left: 110px;
+    left: calc(100vw / 3.6);
   }
   .modal {
     width: 320px;
@@ -596,7 +607,7 @@ summary {
     z-index: 20;
   }
 }
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 321px) {
   .btn {
     padding: 10px 25px;
     border: none;
@@ -605,9 +616,10 @@ summary {
     font-size: larger;
     font-weight: 600;
     font-family: cursive;
-    position: absolute;
+    /* position: absolute; */
+    margin: 0 auto;
     top: 20px;
-    left: 80px;
+    left: calc(100vw / 3.9)
   }
   .modal {
     width: 280px;
