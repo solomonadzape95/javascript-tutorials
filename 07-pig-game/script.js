@@ -41,6 +41,9 @@ let endFunc = function () {
 
   dice.classList.add("hidden");
   intervalId = setInterval(winnerAnimation, 250);
+  setTimeout(() => {
+    clearInterval(intervalId);
+  }, 3000);
   running = false;
   //   setTimeout(clearInterval(intervalId), 3000);
 };
