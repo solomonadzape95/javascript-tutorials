@@ -44,6 +44,7 @@ let endFunc = function () {
   setTimeout(() => {
     clearInterval(intervalId);
   }, 3000);
+  activePlayer.classList.remove("winner");
   running = false;
   //   setTimeout(clearInterval(intervalId), 3000);
 };
