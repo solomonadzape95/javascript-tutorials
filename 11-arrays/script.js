@@ -61,6 +61,64 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = "";
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? "deposit" : "withdrawal";
+
+    const html = `
+   <div class="movements__row">
+          <div class="movements__type movements__type--${type}">${
+      i + 1
+    } ${type}</div>
+          <div class="movements__value">${mov}</div>
+        </div>`;
+
+    containerMovements.insertAdjacentHTML("afterbegin", html);
+  });
+};
+displayMovements(account1.movements);
+
+const createUsernames = function (accs) {
+  accs.forEach((acc) => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+  });
+};
+createUsernames(accounts);
+const calcDisplayBal = function (movements) {
+  const balance = movements.reduce((a, b) => {
+    return a + b;
+  });
+  labelBalance.textContent = `${balance}€`;
+};
+calcDisplayBal(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+  const expenditures = movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, mov) => acc + Math.abs(mov), 0);
+  labelSumOut.textContent = `${expenditures}€`;
+  const interest = movements
+    .filter((mov) => mov > 0)
+    .map((deposit) => (deposit * 1.2) / 100).filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+
+calcDisplaySummary(account1.movements);
+
+// Alan Walker Believers
+// Wait a minute willow
+// Early Jafaris Jay Crooke
+// World We Used To KNow ALan Walker
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -134,4 +192,66 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   console.log(`${key}: ${value}`);
 // });
 // // You can use underscores '_' in place of 'throwaway' variables i.e. variables that are not useful.
+// Coding Challenge 1
 
+// const checkDogs = function (dogsJulia, dogsKate) {
+//   const arr1Modified = dogsJulia.slice(1, dogsJulia.length - 2);
+//   // console.log(arr1Modified);
+//   const combinedArr = [...arr1Modified, ...dogsKate];
+//   // console.log(combinedArr);
+//   // console.log(dogsJulia);
+
+//   combinedArr.forEach((element, index) => {
+//     element >= 3
+//       ? console.log(
+//           `Dog number ${index + 1} is an adult🐕, and is ${element} years old.`
+//         )
+//       : console.log(
+//           `Dog number ${
+//             index + 1
+//           } is still a puppy🐶, and is ${element} years old.`
+//         );
+//   });
+// };
+// checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+// checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+
+// Map Method
+// const eurToUsd = 1.1;
+// const movementsUSD = movements.map((mov) => mov * eurToUsd);
+// console.log(movementsUSD);
+
+// // Filter
+// const deposits = movements.filter((mov) => mov > 0);
+// console.log(deposits);
+// const withdrawals = movements.filter((mov) => mov < 0);
+// console.log(withdrawals);
+
+// Reduce
+// const balance = movements.reduce((a, b) => {
+//   return a + b;
+// });
+// console.log(balance);
+
+// Maximum Value
+// const max = movements.reduce((acc, curr) => {
+//  return acc = curr > acc ? curr : acc;
+// });
+// console.log(max);
+
+// Coding Challenge 2
+// const calcAvgHumanAge = function (ages) {
+//   // console.log(ages);
+
+//   const average = ages
+//     .map((age) => {
+//       return age <= 2 ? age * 2 : 16 + age * 4;
+//     })
+//     .filter((age) => age >= 18).reduce(
+//     (acc, cur, i, arr) => acc + cur / arr.length,
+//     0
+//   );
+//   console.log(average);
+// };
+// calcAvgHumanAge([5, 2, 4, 1, 15, 8, 3]);
+// calcAvgHumanAge([16, 6, 10, 5, 6, 1, 4]);
