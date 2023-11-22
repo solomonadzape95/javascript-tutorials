@@ -8,7 +8,7 @@
 const account1 = {
   owner: "Jonas Schmedtmann",
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
-  interestRate: 1.2, // %
+  interestRate: 1.2, 
   pin: 1111,
 };
 
@@ -416,8 +416,11 @@ const z = Array.from({ length: 7 }, (_, i) => i + 1);
 console.log(z);
 // Creating an array with 100 random dice rolls
 
-const diceRolls = Array.from({ length: 100 }, () =>
-  Math.floor(Math.random() * 6) + 1
+const diceRolls = Array.from(
+  { length: 100 },
+  () => Math.floor(Math.random() * 6) + 1
 );
 console.log(diceRolls);
-
+// const list = Array.from(document.querySelectorAll('p'))
+const movementUI = Array.from(document.querySelectorAll(".movements__value"));
+console.log(movementUI);
