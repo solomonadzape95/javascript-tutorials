@@ -10,7 +10,7 @@ body{
     box-sizing: border-box;
     margin: 0 auto;
     color: white;
-    /* font-family: ArcadeClassic; */
+    font-family: ArcadeClassic;
     overflow: hidden;
 }
 main{
@@ -62,7 +62,7 @@ div.number{
     top: 14rem;
     left: 30rem;
     font-size: 5rem;
-    /* font-family: ArcadeClassic; */
+    font-family: ArcadeClassic;
     text-align: center;
 }
 section{
@@ -72,7 +72,7 @@ section{
     display: inline-block;
     padding: 10px 10px;
     font-size: 1.52rem;
-    /* font-family: ArcadeClassic; */
+    font-family: ArcadeClassic;
     margin: 1rem;
 
 }

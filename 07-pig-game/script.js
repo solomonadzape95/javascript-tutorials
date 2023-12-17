@@ -1,132 +1,136 @@
-const newBtn = document.querySelector(".new-game");
-const hold = document.querySelector(".hold");
-const rollDice = document.querySelector(".roll-dice");
-let playerOneTotal = document.querySelector(".total-score-one");
-let playerTwoTotal = document.querySelector(".total-score-two");
-let playerOneCurrent = document.querySelector(".current-score-one");
-let playerTwoCurrent = document.querySelector(".current-score-two");
-const dice = document.querySelector("span");
-const playerOne = document.querySelector(".player-1");
-const playerTwo = document.querySelector(".player-2");
-let activePlayer = playerOne;
-let dieFace,
-  running = false,
-  intervalId;
-const btns = document.querySelectorAll(".btn");
-const overlay = document.querySelector(".overlay");
-const closeBtn = document.querySelector(".close-modal");
-const modal = document.querySelector(".modal");
+'use strict';
 
-function closeModal() {
-  modal.classList.add("hidden");
-  overlay.classList.add("hidden");
-}
-btns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    modal.classList.remove("hidden");
-    overlay.classList.remove("hidden");
+// Selecting elements
+const playerName0El = document.querySelector('#name--0');
+const playerName1El = document.querySelector('#name--1');
+const player0El = document.querySelector('.player--0');
+const player1El = document.querySelector('.player--1');
+const score0El = document.querySelector('#score--0');
+const score1El = document.getElementById('score--1');
+const current0El = document.getElementById('current--0');
+const current1El = document.getElementById('current--1');
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnCloseModal = document.querySelector('.close-modal');
+const btnsOpenModal = document.querySelectorAll('.show-modal');
+
+const diceEl = document.querySelector('.dice');
+const btnNew = document.querySelector('.btn--new');
+const btnRoll = document.querySelector('.btn--roll');
+const btnHold = document.querySelector('.btn--hold');
+
+let scores, currentScore, activePlayer, playing;
+
+// Starting conditions
+const init = function () {
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  diceEl.classList.add('hidden');
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+};
+init();
+
+const switchPlayer = function () {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  currentScore = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  player0El.classList.toggle('player--active');
+  player1El.classList.toggle('player--active');
+};
+
+// Rolling dice functionality
+btnRoll.addEventListener('click', function () {
+  if (playing) {
+    // 1. Generating a random dice roll
+    const dice = Math.trunc(Math.random() * 6) + 1;
+
+    // 2. Display dice
+    diceEl.classList.remove('hidden');
+    diceEl.src = `dice-${dice}.png`;
+
+    // 3. Check for rolled 1
+    if (dice !== 1) {
+      // Add dice to current score
+      currentScore += dice;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        currentScore;
+    } else {
+      // Switch to next player
+      switchPlayer();
+    }
+  }
+});
+// Editing Player Names in DblClick
+const changePlayerName = function (player) {
+  player.addEventListener('dblclick', function (e) {
+    this.textContent = prompt('Enter your desired name:', '');
   });
-});
-closeBtn.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
-window.addEventListener("keydown", (event) => {
-  if (event.keyCode === 27) closeModal();
+};
+changePlayerName(playerName0El);
+changePlayerName(playerName1El);
+// Modal Help Window
+
+const openModal = function () {
+  modal.classList.remove('hidden');
+  overlay.classList.remove('hidden');
+};
+
+const closeModal = function () {
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
+};
+
+for (let i = 0; i < btnsOpenModal.length; i++)
+  btnsOpenModal[i].addEventListener('click', openModal);
+
+btnCloseModal.addEventListener('click', closeModal);
+overlay.addEventListener('click', closeModal);
+
+document.addEventListener('keydown', function (e) {
+  // console.log(e.key);
+
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+    closeModal();
+  }
 });
 
-let winnerAnimation = () => {
-  activePlayer.classList.toggle("winner");
-};
-let endFunc = function () {
-  console.log("Okay~!!");
+btnHold.addEventListener('click', function () {
+  if (playing) {
+    // 1. Add current score to active player's score
+    scores[activePlayer] += currentScore;
+    // scores[1] = scores[1] + currentScore
 
-  dice.classList.add("hidden");
-  intervalId = setInterval(winnerAnimation, 250);
-  setTimeout(() => {
-    clearInterval(intervalId);
-  }, 3000);
-  activePlayer.classList.remove("winner");
-  running = false;
-  //   setTimeout(clearInterval(intervalId), 3000);
-};
-let holdFunc = () => {
-  activePlayer === playerOne && running
-    ? (playerOneTotal.textContent =
-        Number(playerOneTotal.textContent) +
-        Number(playerOneCurrent.textContent))
-    : (playerTwoTotal.textContent =
-        Number(playerTwoTotal.textContent) +
-        Number(playerTwoCurrent.textContent));
-  activePlayer === playerOne && running
-    ? Number(playerOneTotal.textContent) >= 100
-      ? endFunc()
-      : changeActivePlayer()
-    : Number(playerTwoTotal.textContent) >= 100
-    ? endFunc()
-    : changeActivePlayer();
+    document.getElementById(`score--${activePlayer}`).textContent =
+      scores[activePlayer];
 
-  console.log(intervalId, 5);
-};
-let changeActivePlayer = () => {
-  playerOneCurrent.textContent = 0;
-  playerTwoCurrent.textContent = 0;
-  setTimeout(activePlayer.classList.add("next-player"), 1000);
-  activePlayer === playerOne && running
-    ? (activePlayer = playerTwo)
-    : (activePlayer = playerOne);
-  activePlayer.classList.remove("next-player");
-  console.log("Active Player Changed!!");
-};
-let createDice = () => {
-  dieFace = Math.trunc(Math.random() * 6) + 1;
-  console.log(dieFace);
+    // 2. Check if player's score is >= 100
+    if (scores[activePlayer] >= 100) {
+      // Finish the game
+      playing = false;
+      diceEl.classList.add('hidden');
 
-  dice.classList.remove("hidden");
-  dieFace == 1
-    ? (dice.style.backgroundImage = 'url("./img/dice-1.png")')
-    : dieFace == 2
-    ? (dice.style.backgroundImage = 'url("./img/dice-2.png")')
-    : dieFace == 3
-    ? (dice.style.backgroundImage = 'url("./img/dice-3.png")')
-    : dieFace == 4
-    ? (dice.style.backgroundImage = 'url("./img/dice-4.png")')
-    : dieFace == 5
-    ? (dice.style.backgroundImage = 'url("./img/dice-5.png")')
-    : dieFace == 6
-    ? (dice.style.backgroundImage = 'url("./img/dice-6.png")')
-    : "";
-};
-let sumUp = () => {
-  activePlayer === playerOne
-    ? (playerOneCurrent.textContent =
-        Number(playerOneCurrent.textContent) + dieFace)
-    : (playerTwoCurrent.textContent =
-        Number(playerTwoCurrent.textContent) + dieFace);
-};
-let checkDice = () => {
-  dieFace === 1 ? changeActivePlayer() : sumUp();
-};
-let playGame = () => {
-  createDice();
-  checkDice();
-  console.log(activePlayer);
-};
-rollDice.addEventListener("click", () => {
-  running = true;
-  playGame();
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('player--active');
+    } else {
+      // Switch to the next player
+      switchPlayer();
+    }
+  }
 });
-hold.addEventListener("click", () => {
-  running ? holdFunc() : null;
-});
-newBtn.addEventListener("click", () => {
-  activePlayer.classList.remove("winner");
-  running = false;
-  clearInterval(intervalId);
-  activePlayer = playerOne;
-  activePlayer.classList.remove("next-player");
-  playerTwo.classList.add("next-player");
-  playerOneCurrent.textContent = 0;
-  playerTwoCurrent.textContent = 0;
-  playerOneTotal.textContent = 0;
-  playerTwoTotal.textContent = 0;
-  dice.classList.add("hidden");
-});
+
+btnNew.addEventListener('click', init);
