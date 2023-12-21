@@ -68,4 +68,18 @@ console.log('Importing Module');
 //     cart.push({ prod, quant });
 // };
 //   const {addToCart} = require('./shoppingCart')
-import cloneDeep from './../node_modules./lodash-es '
+import cloneDeep from './../node_modules./lodash-es/cloneDeep.js';
+
+const state = {
+  cart: [
+    { product: 'bread', quantity: 5 },
+    { product: 'bread', quantity: 5 },
+  ],
+  user: { loggedIn: true },
+};
+const stateClone =
+  /* Object.assign is used to clone an object and attach it or merge it with another */ Object.assign(
+    {},
+    state
+  );
+console.log(stateClone);
