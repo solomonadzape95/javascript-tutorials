@@ -68,12 +68,13 @@ console.log('Importing Module');
 //     cart.push({ prod, quant });
 // };
 //   const {addToCart} = require('./shoppingCart')
+// Introduction to NPM
 import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
 
 const state = {
   cart: [
     { product: 'bread', quantity: 5 },
-    { product: 'bread', quantity: 5 },
+    { product: 'meat', quantity: 5 },
   ],
   user: { loggedIn: true },
 };
@@ -86,3 +87,7 @@ console.log(stateClone);
 const stateDeepClone = cloneDeep(state);
 state.user.loggedIn = false;
 console.log(stateDeepClone);
+
+if (module.hot) {
+  module.hot.accept();
+}
